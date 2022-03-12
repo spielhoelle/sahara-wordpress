@@ -20,7 +20,8 @@ function animation_func($atts)
 		// );
 	}
 	$html =	"<div id='animation'>
-				<button class='btn btn-lg btn-secondary'>Click</button>
+				<button class='btn btn-lg btn-secondary' id='camera-getposition-button'>Test</button>
+				<button class='btn btn-lg btn-secondary' id='camera-reset-button'>Recenter camera</button>
 			</div>";
 	echo $html;
 }

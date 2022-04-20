@@ -96,7 +96,7 @@ scene.add(light2);
 var loader = new THREE.GLTFLoader();
 //var loader = new THREE.FBXLoader();
 loader.crossOrigin = true;
-loader.load('wp-content/themes/twentytwentytwo-child/animation/TESTGTLF.gltf', function (gltf) {
+loader.load('wp-content/themes/twentytwentytwo-child/animation/TIMEMACHINE7.gltf', function (gltf) {
 
 	console.log(gltf)
 	clock = new THREE.Clock();

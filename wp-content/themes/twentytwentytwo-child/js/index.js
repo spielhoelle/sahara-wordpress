@@ -21,12 +21,12 @@ render();
 
 var scene = new THREE.Scene();
 
-var camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight / 2), 1, 80);
+var camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight), 1, 80);
 camera.position.set(5, -600, 5);
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight / 2);
+renderer.setSize(window.innerWidth, window.innerHeight - 32);
 renderer.setClearColor(backgroundColor);//0x );
 var vector = camera.position.clone();
 
@@ -54,7 +54,6 @@ document.querySelector('#animation').appendChild(renderer.domElement);
 function renderScene() { renderer.render(scene, camera); }
 renderCalls.push(renderScene);
 
-/* ////////////////////////////////////////////////////////////////////////// */
 
 var controls = new THREE.OrbitControls(camera);
 
@@ -62,8 +61,9 @@ controls.rotateSpeed = 0.1;
 controls.zoomSpeed = 0.9;
 
 controls.minDistance = 0;
-controls.maxDistance = 50;
-camera.position.distanceTo(3);
+controls.maxDistance = 10;
+camera.position.distanceTo(10);
+scene.add(camera);
 
 
 controls.minPolarAngle = 0; // radians
@@ -78,18 +78,14 @@ renderCalls.push(function () {
 });
 
 
-/* ////////////////////////////////////////////////////////////////////////// */
 
+// var light = new THREE.PointLight(0xffffcc, 1, 10);
+// light.position.set(4, 30, -20);
+// scene.add(light);
 
-var light = new THREE.PointLight(0xffffcc, 20, 200);
-light.position.set(4, 30, -20);
-scene.add(light);
-
-var light2 = new THREE.AmbientLight(0x20202A, 20, 100);
+var light2 = new THREE.AmbientLight(0xffffcc, 1);
 light2.position.set(30, -10, 30);
 scene.add(light2);
-
-/* ////////////////////////////////////////////////////////////////////////// */
 
 
 
@@ -98,7 +94,6 @@ var loader = new THREE.GLTFLoader();
 loader.crossOrigin = true;
 loader.load('wp-content/themes/twentytwentytwo-child/animation/TIMEMACHINE7.gltf', function (gltf) {
 
-	console.log(gltf)
 	clock = new THREE.Clock();
 
 
@@ -109,11 +104,10 @@ loader.load('wp-content/themes/twentytwentytwo-child/animation/TIMEMACHINE7.gltf
 	// gltf.cameras; // Array<THREE.Camera>
 	// gltf.asset; // Object
 	mixer = new THREE.AnimationMixer(gltf.scene);
-	console.log('mixer', mixer);
 
 
 	gltf.animations.forEach((clip) => {
-		console.log('clip', clip);
+		// console.log('clip', clip);
 		mixer.clipAction(clip).play();
 	});
 	scene.add(gltf.scene);
@@ -157,7 +151,7 @@ loader.load('wp-content/themes/twentytwentytwo-child/animation/TIMEMACHINE7.gltf
 		var intersects = raycaster.intersectObjects(scene.children, true);
 
 		if (intersects.length > 0) {
-			console.log('Intersection:', intersects[0]);
+			// console.log('Intersection:', intersects[0]);
 
 			// newPosition.x = Math.cos(800);
 			// newPosition.z = Math.sin(800);

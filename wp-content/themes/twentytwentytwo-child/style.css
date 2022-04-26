@@ -22,3 +22,23 @@ Twenty Twenty-Two Child is distributed under the terms of the GNU GPL.
 	top: 32px;
 	left: 0;
 }
+
+#animation {
+	height: 100%;
+	/* filter: blur(1px); */
+}
+
+#animation video {
+	position: absolute;
+	top: 0px;
+	left: 0;
+	width: 100%;
+	opacity: 0.5;
+	pointer-events: none;
+	height: 100%;
+	object-fit: cover;
+}
+
+.d-none {
+	display: none;
+}

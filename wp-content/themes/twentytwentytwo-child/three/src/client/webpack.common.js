@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/client/client.ts',
+    entry: './wp-content/themes/twentytwentytwo-child/three/src/client/client.ts',
     module: {
         rules: [
             {

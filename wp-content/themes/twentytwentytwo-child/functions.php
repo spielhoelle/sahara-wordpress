@@ -30,7 +30,7 @@ function animation_func($atts)
 					<button class='btn btn-lg btn-secondary' id='hide_overlay'>Hide overlay</button>
 				</div>
 
-				 <video width='320' height='240' class='d-none' autoplay>
+				 <video width='320' height='240' class='d-none' autoplay loop>
 					<source src='wp-content/themes/twentytwentytwo-child/smoke.mp4' type='video/mp4'>
 					<source src='movie.ogg' type='video/ogg'>
 					Your browser does not support the video tag.

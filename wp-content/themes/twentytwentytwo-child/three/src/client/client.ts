@@ -3,6 +3,7 @@ import { AnimationMixer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as TWEEN from "@tweenjs/tween.js";
+import './ajax_template'
 
 let mixer: AnimationMixer
 let clock: any
@@ -22,7 +23,7 @@ const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerH
 // camera.position.z = 2
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight - 100)
+renderer.setSize(window.innerWidth, window.innerHeight - 400)
 const selector = document.querySelector('#animation')
 selector && selector.appendChild(renderer.domElement);
 
@@ -34,7 +35,7 @@ controls.zoomSpeed = 0.9;
 controls.minDistance = 0;
 controls.maxDistance = 10;
 camera.position.set(0, 1, 5);
-console.log('camera', camera);
+// console.log('camera', camera);
 scene.add(camera);
 
 controls.minPolarAngle = 0; // radians
@@ -52,8 +53,8 @@ renderCalls.push(renderScene);
 var loader: GLTFLoader = new GLTFLoader();
 //var loader = new THREE.FBXLoader();
 // loader.crossOrigin = true;
-loader.load('wp-content/themes/twentytwentytwo-child/animation/final test.gltf', function (gltf) {
-    console.log('gltf', gltf);
+loader.load('/wp-content/themes/twentytwentytwo-child/animation/final test.gltf', function (gltf) {
+    // console.log('gltf', gltf);
     clock = new THREE.Clock();
     // gltf.animations; // Array<THREE.AnimationClip>
     // gltf.scene; // THREE.Group
@@ -62,7 +63,7 @@ loader.load('wp-content/themes/twentytwentytwo-child/animation/final test.gltf',
     // gltf.asset; // Object
     mixer = new THREE.AnimationMixer(gltf.scene);
     gltf.animations.forEach((clip) => {
-        console.log('clip', clip);
+        // console.log('clip', clip);
         mixer.clipAction(clip).play();
     });
     // document.querySelector("#animation video")?.classList.remove("d-none");

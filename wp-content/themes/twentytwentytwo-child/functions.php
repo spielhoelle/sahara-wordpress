@@ -27,7 +27,7 @@ function animation_func($atts)
 					<button class='btn btn-lg btn-secondary' id='camera-getposition-button'>Get camera position</button>
 					<button class='btn btn-lg btn-secondary' id='camera-reset-face-button'>Center camera on face</button>
 					<button class='btn btn-lg btn-secondary' id='camera-reset-button'>Center camera on skeletton</button>
-					<button class='btn btn-lg btn-secondary' id='hide_overlay'>Hide overlay</button>
+					<button class='btn btn-lg btn-secondary' id='hide_overlay'>Toggle overlay</button>
 				</div>
 
 				 <video width='320' height='240' class='d-none' autoplay loop>

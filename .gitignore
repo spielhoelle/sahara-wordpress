@@ -45,3 +45,6 @@ wp-config.php
 #/wp-content/themes
 node_modules
 .history
+*.sql.gz
+*.sql
+.DS_Store

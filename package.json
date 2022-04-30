@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --config wp-content/themes/twentytwentytwo-child/three/src/client/webpack.prod.js",
     "start": "webpack -w --progress --config wp-content/themes/twentytwentytwo-child/three/src/client/webpack.prod.js",
+    "dev": "webpack -w --progress --config wp-content/themes/twentytwentytwo-child/three/src/client/webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

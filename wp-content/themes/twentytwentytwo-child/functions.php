@@ -1,6 +1,5 @@
 <?php
-
-//[animation]
+// [animation]
 add_action('wp_enqueue_scripts', 'menu_scripts');
 function menu_scripts()
 {
@@ -8,17 +7,6 @@ function menu_scripts()
 	$parent_style = 'parent-style';
 	wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css');
 	wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array($parent_style), wp_get_theme()->get('Version'));
-	// wp_enqueue_script('TweenMax', get_bloginfo('stylesheet_directory') . '/js/TweenMax.min.js', array('jquery'), false);
-	// wp_enqueue_script('inflate', get_bloginfo('stylesheet_directory') . '/js/inflate.min.js', array('jquery'), false);
-	// wp_enqueue_script('three', get_bloginfo('stylesheet_directory') . '/js/three.min.js', array('jquery'), false);
-	// wp_enqueue_script('OrbitControls', get_bloginfo('stylesheet_directory') . '/js/OrbitControls.js', array('jquery'), false);
-	// wp_enqueue_script('GLTFLoader', get_bloginfo('stylesheet_directory') . '/js/GLTFLoader.js', array('jquery'), false);
-	// wp_enqueue_script('FBXLoader', get_bloginfo('stylesheet_directory') . '/js/FBXLoader.js', array('jquery'), false);
-	// wp_enqueue_script(
-	// 	'custom-script',
-	// 	get_stylesheet_directory_uri() . '/js/custom_script.js',
-	// 	array('jquery')
-	// );
 }
 function animation_func($atts)
 {
@@ -31,7 +19,7 @@ function animation_func($atts)
 					<button class='btn btn-lg btn-secondary' id='template'>Get page template</button>
 				</div>
 
-				 <video width='320' height='240' class='d-none' autoplay loop>
+				 <video width='320' height='240' class='d-none overlay w-100 h-100' autoplay loop>
 					<source src='wp-content/themes/twentytwentytwo-child/smoke.mp4' type='video/mp4'>
 					<source src='movie.ogg' type='video/ogg'>
 					Your browser does not support the video tag.
@@ -40,24 +28,3 @@ function animation_func($atts)
 	echo $html;
 }
 add_shortcode('animation', 'animation_func');
-
-// echo "<script type=ext/javascript'>var ajaxurl='" . admin_url('admin-ajax.php') . "'; console.log(ajaxurl);</script>";
-// add_action("wp_ajax_infiniteScroll", "infiniteScroll");
-// add_action("wp_ajax_nopriv_infiniteScroll", "infiniteScroll");
-// function infiniteScroll()
-// {
-// 	// This is what's returned to the client.
-// 	echo "foo";
-// 	die();
-// }
-
-
-function add_menu_item_slug_class($classes, $item, $args)
-{
-
-	$item_class = sanitize_title($item->title); // Convert title to a slug
-	$classes[] = "menu-item-" . $item_class;
-
-	return $classes;
-}
-add_filter('nav_menu_css_class', 'add_menu_item_slug_class', 1, 3);

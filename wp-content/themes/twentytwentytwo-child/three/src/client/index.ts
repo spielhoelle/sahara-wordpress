@@ -19,7 +19,7 @@ function render() {
 }
 render();
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 90000)
+const camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight - 400), 0.1, 90000)
 // camera.position.z = 2
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -145,10 +145,4 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight)
     render()
 }
-function animate() {
-    requestAnimationFrame(animate)
-    controls.update()
-    console.log('Date.now(', Date.now());
-    render()
-}
-// animate()
+export { camera }

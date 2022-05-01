@@ -28,3 +28,21 @@ function animation_func($atts)
 	echo $html;
 }
 add_shortcode('animation', 'animation_func');
+
+add_filter( 'user_has_cap', 'wpse_67225_unfiltered_upload'  );
+function wpse_67225_unfiltered_upload( $caps  )
+{
+      $caps['unfiltered_upload'] = 1;
+          return $caps;
+
+}
+
+add_filter('upload_mimes', 'my_myme_types', 1, 1);
+function my_myme_types($mime_types)
+{
+	$mime_types['gltf'] = 'model/gltf+json';
+	$mime_types['glb'] = 'model/gltf-binary';
+	return $mime_types;
+}
+
+

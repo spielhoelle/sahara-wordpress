@@ -53,7 +53,7 @@ renderCalls.push(renderScene);
 var loader: GLTFLoader = new GLTFLoader();
 //var loader = new THREE.FBXLoader();
 // loader.crossOrigin = true;
-loader.load('/wp-content/themes/twentytwentytwo-child/animation/final test.gltf', function (gltf) {
+loader.load('/wp-content/uploads/animation/animation.gltf', function (gltf) {
     // console.log('gltf', gltf);
     clock = new THREE.Clock();
     // gltf.animations; // Array<THREE.AnimationClip>

@@ -19,7 +19,7 @@ function render() {
 }
 render();
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight - 400), 0.1, 90000)
+const camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight - 400), 0.01, 90000)
 // camera.position.z = 2
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -62,6 +62,8 @@ loader.load('/wp-content/uploads/animation/animation.gltf', function (gltf) {
     // gltf.cameras; // Array<THREE.Camera>
     // gltf.asset; // Object
     mixer = new THREE.AnimationMixer(gltf.scene);
+    let gltfModel = gltf.scene
+    gltfModel.traverse(function (obj) { obj.frustumCulled = false; });
     gltf.animations.forEach((clip) => {
         // console.log('clip', clip);
         mixer.clipAction(clip).play();

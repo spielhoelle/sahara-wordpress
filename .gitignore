@@ -43,3 +43,8 @@ wp-config.php
 # Note: If you wish to whitelist themes,
 # uncomment the next line
 #/wp-content/themes
+node_modules
+.history
+*.sql.gz
+*.sql
+.DS_Store

@@ -2,19 +2,21 @@ version: "3.9"
 
 services:
   wordpress:
-    image: wordpress:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./wp-content:/var/www/html/wp-content
+      - ./wp-content:/var/www/html/wp-content:delegated
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
       - "8000:80"
     restart: always
     environment:
-      WORDPRESS_DB_HOST: globalmysql
+      WORDPRESS_DB_HOST: gmysql
       WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_PASSWORD: password
       WORDPRESS_DB_NAME: sahara
-      WORDPRESS_DEBUG: 1
+      # WORDPRESS_DEBUG: 1
     networks:
       - mysqlnet
 

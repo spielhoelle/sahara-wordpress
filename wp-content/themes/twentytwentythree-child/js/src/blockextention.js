@@ -7,75 +7,75 @@ const { PanelBody, SelectControl } = wp.components;
 const { addFilter } = wp.hooks;
 const { __ } = wp.i18n;
 
-// Enable spacing control on the following blocks
-const enableSpacingControlOnBlocks = [
-	'core/image',
+// Enable intro-sequence control on the following blocks
+const enableSequenceControlOnBlocks = [
+	'core/embed',
 ];
 
-// Available spacing control options
-const spacingControlOptions = [
+// Available intro-sequence control options
+const sequenceControlOptions = [
 	{
 		label: __('None'),
 		value: '',
 	},
 	{
-		label: __('Small'),
-		value: 'small',
+		label: __('First'),
+		value: 'first',
 	},
 	{
-		label: __('Medium'),
-		value: 'medium',
+		label: __('Second'),
+		value: 'second',
 	},
 	{
-		label: __('Large'),
-		value: 'large',
+		label: __('Last'),
+		value: 'last',
 	},
 ];
 
 /**
- * Add spacing control attribute to block.
+ * Add intro-sequence control attribute to block.
  *
  * @param {object} settings Current block settings.
  * @param {string} name Name of block.
  *
  * @returns {object} Modified block settings.
  */
-const addSpacingControlAttribute = (settings, name) => {
+const addSequenceControlAttribute = (settings, name) => {
 	// Do nothing if it's another block than our defined ones.
-	if (!enableSpacingControlOnBlocks.includes(name)) {
+	if (!enableSequenceControlOnBlocks.includes(name)) {
 		return settings;
 	}
 
 	// Use Lodash's assign to gracefully handle if attributes are undefined
 	settings.attributes = assign(settings.attributes, {
-		spacing: {
+		sequence: {
 			type: 'string',
-			default: spacingControlOptions[0].value,
+			default: sequenceControlOptions[0].value,
 		},
 	});
 
 	return settings;
 };
 
-addFilter('blocks.registerBlockType', 'extend-block-example/attribute/spacing', addSpacingControlAttribute);
+addFilter('blocks.registerBlockType', 'extend-block-example/attribute/sequence', addSequenceControlAttribute);
 
 /**
- * Create HOC to add spacing control to inspector controls of block.
+ * Create HOC to add sequence control to inspector controls of block.
  */
-const withSpacingControl = createHigherOrderComponent((BlockEdit) => {
+const withSequenceControl = createHigherOrderComponent((BlockEdit) => {
 	return (props) => {
 		// Do nothing if it's another block than our defined ones.
-		if (!enableSpacingControlOnBlocks.includes(props.name)) {
+		if (!enableSequenceControlOnBlocks.includes(props.name)) {
 			return (
 				<BlockEdit {...props} />
 			);
 		}
 
-		const { spacing } = props.attributes;
+		const { sequence } = props.attributes;
 
-		// add has-spacing-xy class to block
-		if (spacing) {
-			props.attributes.className = `has-spacing-${spacing}`;
+		// add has-sequence-xy class to block
+		if (sequence) {
+			props.attributes.className = `introvideo-${sequence}`;
 		}
 
 		return (
@@ -83,16 +83,16 @@ const withSpacingControl = createHigherOrderComponent((BlockEdit) => {
 				<BlockEdit {...props} />
 				<InspectorControls>
 					<PanelBody
-						title={__('My Spacing Control')}
+						title={__('Intro Sequence Control')}
 						initialOpen={true}
 					>
 						<SelectControl
-							label={__('Spacing')}
-							value={spacing}
-							options={spacingControlOptions}
-							onChange={(selectedSpacingOption) => {
+							label={__('Sequence')}
+							value={sequence}
+							options={sequenceControlOptions}
+							onChange={(selectedSequenceOption) => {
 								props.setAttributes({
-									spacing: selectedSpacingOption,
+									sequence: selectedSequenceOption,
 								});
 							}}
 						/>
@@ -101,9 +101,9 @@ const withSpacingControl = createHigherOrderComponent((BlockEdit) => {
 			</Fragment>
 		);
 	};
-}, 'withSpacingControl');
+}, 'withSequenceControl');
 
-addFilter('editor.BlockEdit', 'extend-block-example/with-spacing-control', withSpacingControl);
+addFilter('editor.BlockEdit', 'extend-block-example/with-sequence-control', withSequenceControl);
 
 /**
  * Add margin style attribute to save element of block.
@@ -114,24 +114,24 @@ addFilter('editor.BlockEdit', 'extend-block-example/with-spacing-control', withS
  *
  * @returns {object} Modified props of save element.
  */
-const addSpacingExtraProps = (saveElementProps, blockType, attributes) => {
+const addSequenceExtraProps = (saveElementProps, blockType, attributes) => {
 	// Do nothing if it's another block than our defined ones.
-	if (!enableSpacingControlOnBlocks.includes(blockType.name)) {
+	if (!enableSequenceControlOnBlocks.includes(blockType.name)) {
 		return saveElementProps;
 	}
 
 	const margins = {
-		small: '5px',
-		medium: '15px',
-		large: '30px',
+		first: '5px',
+		second: '15px',
+		last: '30px',
 	};
 
-	if (attributes.spacing in margins) {
+	if (attributes.sequence in margins) {
 		// Use Lodash's assign to gracefully handle if attributes are undefined
-		assign(saveElementProps, { style: { 'margin-bottom': margins[attributes.spacing] } });
+		assign(saveElementProps, { style: { 'margin-bottom': margins[attributes.sequence] } });
 	}
 
 	return saveElementProps;
 };
 
-addFilter('blocks.getSaveContent.extraProps', 'extend-block-example/get-save-content/extra-props', addSpacingExtraProps);
+addFilter('blocks.getSaveContent.extraProps', 'extend-block-example/get-save-content/extra-props', addSequenceExtraProps);

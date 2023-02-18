@@ -4,6 +4,7 @@ add_action('wp_enqueue_scripts', 'menu_scripts');
 function menu_scripts()
 {
 	wp_enqueue_script('animation', get_bloginfo('stylesheet_directory') . '/three/dist/client/bundle.js', array('jquery'), '1.0.0', true);
+	wp_enqueue_script('videojs', get_stylesheet_directory_uri() .  '/script.js', array('jquery'), '1.0.0', true);
 	$parent_style = 'parent-style';
 	wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css');
 	wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array($parent_style), wp_get_theme()->get('Version'));
@@ -29,12 +30,11 @@ function animation_func($atts)
 }
 add_shortcode('animation', 'animation_func');
 
-add_filter( 'user_has_cap', 'wpse_67225_unfiltered_upload'  );
-function wpse_67225_unfiltered_upload( $caps  )
+add_filter('user_has_cap', 'wpse_67225_unfiltered_upload');
+function wpse_67225_unfiltered_upload($caps)
 {
-      $caps['unfiltered_upload'] = 1;
-          return $caps;
-
+	$caps['unfiltered_upload'] = 1;
+	return $caps;
 }
 
 add_filter('upload_mimes', 'my_myme_types', 1, 1);
@@ -44,5 +44,3 @@ function my_myme_types($mime_types)
 	$mime_types['glb'] = 'model/gltf-binary';
 	return $mime_types;
 }
-
-

@@ -56,9 +56,48 @@ function extend_block_example_enqueue_block_editor_assets()
 	// Enqueue our script
 	wp_enqueue_script(
 		'blockextention.bundle.js',
-		esc_url(get_stylesheet_directory_uri(). '/js/dist/blockextention.bundle.js'),
+		esc_url(get_stylesheet_directory_uri() . '/js/dist/blockextention.bundle.js'),
 		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'),
 		'1.0.0',
 		true // Enqueue the script in the footer.
 	);
 }
+
+
+// /*
+//  * Whitelist specific Gutenberg blocks (paragraph, heading, image and lists)
+//  *
+//  * @author Misha Rudrastyh
+//  * @link https://rudrastyh.com/gutenberg/remove-default-blocks.html#allowed_block_types_all
+//  */
+// add_filter('allowed_block_types_all', 'misha_allowed_block_types', 25, 2);
+
+// function misha_allowed_block_types($allowed_blocks, $editor_context)
+// {
+// 	echo '<pre>$allowed_blocks,';
+// 	var_dump($allowed_blocks);
+// 	echo '</pre>';
+// 	return array(
+// 		'core/image',
+// 		'core/video',
+// 		'core/paragraph',
+// 		'core/heading',
+// 		'core/list',
+// 		'core/list-item'
+// 	);
+// }
+
+
+/**********************
+ *
+ * Add parameters to Vimeo videos in Lightbox
+ * @param string   $param Default '?autoplay=0'
+ * @return string
+ *
+ **********************/
+// add_filter('uncode_vimeo_params', 'uncode_child_vimeo_params');
+// function uncode_child_vimeo_params($param)
+// {
+// 	$param = '?muted=0';
+// 	return $param;
+// }

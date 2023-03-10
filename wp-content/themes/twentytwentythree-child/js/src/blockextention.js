@@ -57,7 +57,7 @@ const addSequenceControlAttribute = (settings, name) => {
 	return settings;
 };
 
-addFilter('blocks.registerBlockType', 'extend-block-example/attribute/sequence', addSequenceControlAttribute);
+addFilter('blocks.registerBlockType', 'extend-core-block/attribute/sequence', addSequenceControlAttribute);
 
 /**
  * Create HOC to add sequence control to inspector controls of block.
@@ -103,7 +103,7 @@ const withSequenceControl = createHigherOrderComponent((BlockEdit) => {
 	};
 }, 'withSequenceControl');
 
-addFilter('editor.BlockEdit', 'extend-block-example/with-sequence-control', withSequenceControl);
+addFilter('editor.BlockEdit', 'extend-core-block/with-sequence-control', withSequenceControl);
 
 /**
  * Add margin style attribute to save element of block.
@@ -134,4 +134,4 @@ const addSequenceExtraProps = (saveElementProps, blockType, attributes) => {
 	return saveElementProps;
 };
 
-addFilter('blocks.getSaveContent.extraProps', 'extend-block-example/get-save-content/extra-props', addSequenceExtraProps);
+addFilter('blocks.getSaveContent.extraProps', 'extend-core-block/get-save-content/extra-props', addSequenceExtraProps);

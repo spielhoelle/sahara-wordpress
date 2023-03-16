@@ -63,6 +63,12 @@ function extend_block_example_enqueue_block_editor_assets()
 	);
 }
 
+function create_block_gutenpride_block_init()
+{
+	register_block_type(__DIR__ . '/blockextentions/gutenpride/build');
+}
+add_action('init', 'create_block_gutenpride_block_init');
+
 
 // /*
 //  * Whitelist specific Gutenberg blocks (paragraph, heading, image and lists)
@@ -101,3 +107,15 @@ function extend_block_example_enqueue_block_editor_assets()
 // 	$param = '?muted=0';
 // 	return $param;
 // }
+
+function ree_youtube_player($block_content, $block)
+{
+	if ("core-embed/vimeo" === $block['blockName']) {
+		echo '<pre>$block_content';
+		var_dump($block_content);
+		echo '</pre>';
+		$block_content = str_replace('?feature=oembed', '?feature=oembed&rel=0', $block_content);
+	}
+	return $block_content;
+}
+add_filter('render_block', 'ree_youtube_player', 10, 3);

@@ -62,7 +62,24 @@ Twenty Twenty-Three Child is distributed under the terms of the GNU GPL.
 #nav {
   position: relative;
 }
-.landingvideo1,
-.landingvideo2 {
+/* .introvideo-first,
+.introvideo-second,
+.introvideo-last {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
+.introvideo-first .wp-block-embed__wrapper, .introvideo-first iframe,
+.introvideo-second .wp-block-embed__wrapper, .introvideo-second iframe,
+.introvideo-last .wp-block-embed__wrapper, .introvideo-last iframe {
+  width: 100%;
+  height: 100%;
+  
+}
+
+.introvideo-first {
+  display: block;  
+} */

@@ -28,15 +28,6 @@ Twenty Twenty-Three Child is distributed under the terms of the GNU GPL.
   /* filter: blur(1px); */
 }
 
-.overlay {
-  position: absolute;
-  top: 0px;
-  left: 0;
-  opacity: 0.5;
-  pointer-events: none;
-  object-fit: cover;
-}
-
 .center {
   left: 50%;
   top: 50%;
@@ -49,6 +40,9 @@ Twenty Twenty-Three Child is distributed under the terms of the GNU GPL.
 
 .h-100 {
   height: 100%;
+}
+.h-auto {
+  height: auto;
 }
 
 .d-none {

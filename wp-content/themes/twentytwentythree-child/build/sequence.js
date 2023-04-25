@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/edit.js":
-/*!*********************!*\
-  !*** ./src/edit.js ***!
-  \*********************/
+/***/ "./blocks/sequence/edit.js":
+/*!*********************************!*\
+  !*** ./blocks/sequence/edit.js ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -18,79 +18,110 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
-function Edit(props) {
-  const {
+
+function Edit(_ref) {
+  let {
     attributes,
-    setAttributes
-  } = props;
-  const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select('core').getEntityRecords('postType', 'attachment'), []);
-  console.log('posts', posts);
-  const onChangeContent = jobPageIds => {
-    const numberedSequencepageIds = jobPageIds.map(j => Number(j));
-    if (jobPageIds.length !== 0) {
-      const sequence = posts.filter(p => numberedSequencepageIds.includes(p.id));
-      setAttributes({
-        sequence: sequence.map(p => ({
-          id: p.id,
-          link: p.source_url,
-          title: p.title.raw
-        }))
-      });
+    setAttributes,
+    clientId
+  } = _ref;
+  const {
+    getBlockRootClientId,
+    getBlockIndex,
+    getBlocks
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)('core/block-editor');
+  const {
+    moveBlockToPosition
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)('core/block-editor');
+  function demoMoveBlock() {
+    const blocks = getBlocks();
+    if (blocks.length < 2) {
+      alert('Stop playing now; there\'s only this block in the editor!');
+      return;
     }
+    const blockIndex = blocks.findIndex(b => b.name === "create-block/tmy-sequence");
+    if (blockIndex !== 0) {
+      let targetBlock = blocks.splice(blockIndex, 1)[0];
+      if (clientId === targetBlock.clientId) {
+        targetBlock = blocks.shift();
+      }
+      const sourceClientId = clientId;
+      const targetClientId = targetBlock.clientId;
+      const fromRootClientId = getBlockRootClientId(sourceClientId);
+      const toRootClientId = getBlockRootClientId(targetClientId);
+      const targetIndex = getBlockIndex(targetClientId);
+      moveBlockToPosition(sourceClientId, fromRootClientId, toRootClientId, targetIndex);
+    }
+  }
+  let posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select('core').getEntityRecords('postType', 'attachment'), []);
+  const onChangeContent = (videoposition, attachmentId) => {
+    const sequence = [...attributes.sequence];
+    const p = posts.find(p => p.id == attachmentId);
+    sequence[videoposition] = {
+      id: attachmentId,
+      source_url: p.source_url,
+      title: p.title.raw
+    };
+    setAttributes({
+      sequence
+    });
+    demoMoveBlock();
   };
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
-    className: 'jobs'
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)({
+    className: 'sequence'
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, !attributes.sequence || attributes.sequence.length === 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Select some Sequence pages on the left"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", null, posts && attributes.sequence.length && attributes.sequence.map(job => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
+  const options = [{
+    label: "Not set",
+    value: ""
+  }, ...(posts || []).filter(p => p.mime_type === "video/mp4").map((p, i) => ({
+    label: i + " - " + p.title.raw,
+    value: p.id
+  }))];
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, !attributes.sequence || attributes.sequence.length === 0 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Select the videos for the loop"), attributes.sequence.map((seq, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
+    key: i + seq.id,
     width: "320",
     height: "240",
-    class: "d-none overlay w-100 h-100",
-    autoplay: true,
+    class: `overlay w-100 h-auto`,
     loop: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {
-    src: "wp-content/themes/twentytwentytwo-child/smoke.mp4",
+    src: seq.source_url,
     type: "video/mp4"
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {
-    src: "movie.ogg",
-    type: "video/ogg"
-  }), "Your browser does not support the video tag.")
-  // <tr>
-  // 	<td>
-  // 		<a href={job.link}>
-  // 			<h2 key={job.link}>
-  // 				{job.title}
-  // 			</h2>
-  // 		</a>
-  // 	</td>
-  // 	<td>
-  // 		Arrow
-  // 	</td>
-  // </tr>
-  )), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+  }), "Your browser does not support the video tag.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'gutenberg'),
     initialOpen: true
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-    style: {
-      'height': 100
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+    value: attributes.sequence[0]?.id,
+    label: "Video 1",
+    options: options,
+    onChange: attachmentId => {
+      onChangeContent(0, attachmentId);
     },
-    multiple: true,
-    value: (attributes.sequence || []).map(j => j.id),
-    label: "Pages",
-    options: (posts || []).filter(p => p.mime_type === "video/mp4").map(p => ({
-      label: p.title.raw,
-      value: p.id
-    })),
-    onChange: job => {
-      onChangeContent(job);
+    __nextHasNoMarginBottom: true
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+    value: attributes.sequence[1]?.id,
+    label: "Video 2",
+    options: options,
+    onChange: attachmentId => {
+      onChangeContent(1, attachmentId);
+    },
+    __nextHasNoMarginBottom: true
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+    value: attributes.sequence[2]?.id,
+    label: "Video 3",
+    options: options,
+    onChange: attachmentId => {
+      onChangeContent(2, attachmentId);
     },
     __nextHasNoMarginBottom: true
   }))));
@@ -98,73 +129,39 @@ function Edit(props) {
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "./blocks/sequence/index.js":
+/*!**********************************!*\
+  !*** ./blocks/sequence/index.js ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./src/save.js");
-/**
- * Registers a new block provided a unique name and an object defining its behavior.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
- */
-
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * All files containing `style` keyword are bundled together. The code used
- * gets applied both to the front of your site and to the editor. All other files
- * get applied to the editor only.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editor.scss */ "./blocks/sequence/editor.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./blocks/sequence/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./blocks/sequence/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./blocks/sequence/save.js");
 
 
 
-/**
- * Internal dependencies
- */
 
 
-
-/**
- * Every block starts by registering a new block type definition.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
- */
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('create-block/gutenpride', {
-  /**
-   * Used to construct a preview for the block to be shown in the block inserter.
-   */
-  example: {
-    attributes: {
-      message: 'Gutenpride'
-    }
-  },
-  /**
-   * @see ./edit.js
-   */
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('create-block/tmy-sequence', {
+  apiVersion: 2,
+  title: 'Sequence List',
+  icon: 'groups',
+  category: 'widgets',
   edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-  /**
-   * @see ./save.js
-   */
   save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 
 /***/ }),
 
-/***/ "./src/save.js":
-/*!*********************!*\
-  !*** ./src/save.js ***!
-  \*********************/
+/***/ "./blocks/sequence/save.js":
+/*!*********************************!*\
+  !*** ./blocks/sequence/save.js ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -182,21 +179,26 @@ function save(_ref) {
     attributes
   } = _ref;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
-    className: 'jobs'
+    className: 'sequence'
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", null, attributes.sequence.map(job => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: job.link
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
-    key: job.link
-  }, job.title))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, "Arrow")))));
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.sequence.map(seq => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
+    width: "320",
+    height: "240",
+    class: "overlay w-100 h-auto",
+    autoplay: true,
+    loop: true
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {
+    src: seq.source_url,
+    type: "video/mp4"
+  }), "Your browser does not support the video tag.")));
 }
 
 /***/ }),
 
-/***/ "./src/editor.scss":
-/*!*************************!*\
-  !*** ./src/editor.scss ***!
-  \*************************/
+/***/ "./blocks/sequence/editor.scss":
+/*!*************************************!*\
+  !*** ./blocks/sequence/editor.scss ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -205,15 +207,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/style.scss":
-/*!************************!*\
-  !*** ./src/style.scss ***!
-  \************************/
+/***/ "./blocks/sequence/style.scss":
+/*!************************************!*\
+  !*** ./blocks/sequence/style.scss ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = window["React"];
 
 /***/ }),
 
@@ -387,8 +399,8 @@ module.exports = window["wp"]["i18n"];
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"index": 0,
-/******/ 			"./style-index": 0
+/******/ 			"sequence": 0,
+/******/ 			"./style-sequence": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -428,7 +440,7 @@ module.exports = window["wp"]["i18n"];
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = globalThis["webpackChunkgutenpride"] = globalThis["webpackChunkgutenpride"] || [];
+/******/ 		var chunkLoadingGlobal = globalThis["webpackChunktmy"] = globalThis["webpackChunktmy"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
@@ -438,9 +450,9 @@ module.exports = window["wp"]["i18n"];
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["./style-index"], () => (__webpack_require__("./src/index.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["./style-sequence"], () => (__webpack_require__("./blocks/sequence/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=sequence.js.map

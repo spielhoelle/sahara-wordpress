@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "create-block/tmy-sequence",
+	"version": "0.1.0",
+	"title": "Sequences",
+	"category": "text",
+	"icon": "flag",
+	"description": "WP plugin for displaying custom-post type gutenberg blocks",
+	"attributes": {
+		"sequence": {
+			"type": "array",
+			"default": [
+				{
+					"id": 1,
+					"source_url": "empty",
+					"title": "empty"
+				}
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": true,
+		"anchor": true,
+		"multiple": false
+	},
+	"textdomain": "tmy",
+	"editorScript": "file:../../build/sequence.js",
+	"editorStyle": "file:../../build/sequence.css",
+	"style": "file:../../build/style-sequence.css"
+}

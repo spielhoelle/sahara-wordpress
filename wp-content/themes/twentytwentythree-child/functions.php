@@ -1,4 +1,5 @@
 <?php
+require_once 'tmy-plug.php';
 // [animation]
 add_action('wp_enqueue_scripts', 'menu_scripts');
 function menu_scripts()
@@ -62,13 +63,6 @@ function extend_block_example_enqueue_block_editor_assets()
 		true // Enqueue the script in the footer.
 	);
 }
-
-function create_block_gutenpride_block_init()
-{
-	register_block_type(__DIR__ . '/blockextentions/gutenpride/build');
-}
-add_action('init', 'create_block_gutenpride_block_init');
-
 
 // /*
 //  * Whitelist specific Gutenberg blocks (paragraph, heading, image and lists)

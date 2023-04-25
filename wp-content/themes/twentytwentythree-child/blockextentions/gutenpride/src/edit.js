@@ -17,9 +17,9 @@ export default function Edit(props) {
 
 	console.log('posts', posts)
 	const onChangeContent = (jobPageIds) => {
-		const numberedJobpageIds = jobPageIds.map((j) => Number(j))
+		const numberedSequencepageIds = jobPageIds.map((j) => Number(j))
 		if (jobPageIds.length !== 0) {
-			const sequence = posts.filter((p) => numberedJobpageIds.includes(p.id))
+			const sequence = posts.filter((p) => numberedSequencepageIds.includes(p.id))
 			setAttributes({ sequence: sequence.map(p => ({ id: p.id, link: p.source_url, title: p.title.raw })) })
 		}
 	}
@@ -29,7 +29,7 @@ export default function Edit(props) {
 	return (
 		<div {...blockProps}>
 			{!attributes.sequence || attributes.sequence.length === 0 && (
-				<h2>Select some Job pages on the left</h2>
+				<h2>Select some Sequence pages on the left</h2>
 			)}
 			<table>
 				{posts && attributes.sequence.length && attributes.sequence.map((job) => (

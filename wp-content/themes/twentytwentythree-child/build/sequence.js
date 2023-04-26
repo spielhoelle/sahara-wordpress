@@ -92,8 +92,9 @@ function Edit(_ref) {
     key: i + seq.id,
     width: "320",
     height: "240",
-    class: `overlay w-100 h-auto`,
-    loop: true
+    class: `overlay w-100 ${i !== 0 ? "d-none" : ""}`,
+    autoPlay: i === 0,
+    muted: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {
     src: seq.source_url,
     type: "video/mp4"
@@ -181,12 +182,12 @@ function save(_ref) {
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
     className: 'sequence'
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.sequence.map(seq => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.sequence.map((seq, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
     width: "320",
     height: "240",
-    class: "overlay w-100 h-auto",
-    autoplay: true,
-    loop: true
+    class: `overlay w-100 ${i !== 0 ? "d-none" : ""}`,
+    autoPlay: i === 0,
+    muted: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {
     src: seq.source_url,
     type: "video/mp4"

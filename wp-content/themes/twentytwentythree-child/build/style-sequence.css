@@ -5,13 +5,17 @@
   padding-top: 10wh;
 }
 
+.hidden {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
 .sequence .overlay {
   position: absolute;
   height: 100vh;
   top: 0px;
   left: 0;
-  opacity: 0.5;
-  pointer-events: none;
   -o-object-fit: cover;
      object-fit: cover;
 }

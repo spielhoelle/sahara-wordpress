@@ -10,7 +10,7 @@
     "build:three": "webpack --config wp-content/themes/twentytwentytwo-child/three/src/client/webpack.prod.js",
     "start:three": "webpack -w --progress --config wp-content/themes/twentytwentytwo-child/three/src/client/webpack.prod.js",
     "dev:three": "webpack -w --progress --config wp-content/themes/twentytwentytwo-child/three/src/client/webpack.dev.js",
-    "dev:wp": "cd wp-content/plugins/gutenpride && npm start",
+    "dev:wp": "cd wp-content/themes/twentytwentythree-child && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

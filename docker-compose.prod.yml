@@ -17,7 +17,8 @@ services:
       - db
     image: wordpress:latest
     volumes:
-      - ./wp-content:/root/www/sahara/wp-content
+      - ./wp-content:/var/www/html/wp-content
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
       - "8001:80"
     restart: always

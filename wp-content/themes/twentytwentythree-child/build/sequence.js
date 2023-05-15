@@ -92,7 +92,7 @@ function Edit(_ref) {
     key: i + seq.id,
     width: "320",
     height: "240",
-    class: `overlay w-100 ${i !== 0 ? "d-none" : ""}`,
+    class: `overlay w-100`,
     autoPlay: i === 0,
     muted: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {

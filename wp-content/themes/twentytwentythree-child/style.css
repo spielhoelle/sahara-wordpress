@@ -46,7 +46,7 @@ Twenty Twenty-Three Child is distributed under the terms of the GNU GPL.
 }
 
 .d-none {
-  display: none;
+  display: none !important;
 }
 
 .m-0 {
@@ -77,3 +77,10 @@ Twenty Twenty-Three Child is distributed under the terms of the GNU GPL.
 .introvideo-first {
   display: block;  
 } */
+
+/* .wp-site-blocks {
+} */
+
+.loading {
+  opacity: 0;
+}

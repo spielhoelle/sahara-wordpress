@@ -12,6 +12,7 @@
 }
 
 .sequence .overlay {
+  z-index: 1;
   position: absolute;
   height: 100vh;
   top: 0px;

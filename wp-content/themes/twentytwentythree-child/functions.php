@@ -113,3 +113,13 @@ function ree_youtube_player($block_content, $block)
 	return $block_content;
 }
 add_filter('render_block', 'ree_youtube_player', 10, 3);
+
+add_filter('body_class', 'my_body_classes');
+function my_body_classes($classes)
+{
+	$post = get_post();
+	if (has_block('create-block/tmy-sequence', $post->ID)) {
+		$classes[] = 'loading';
+	}
+	return $classes;
+}

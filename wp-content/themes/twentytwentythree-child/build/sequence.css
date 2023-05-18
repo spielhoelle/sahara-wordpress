@@ -11,6 +11,8 @@
   background-color: rgb(201, 255, 201);
 }
 .sequence .overlay {
+  height: 400px;
+  width: 100%;
   position: relative;
   top: 0px;
   left: 0;

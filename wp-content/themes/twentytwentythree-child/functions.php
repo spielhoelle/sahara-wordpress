@@ -4,6 +4,7 @@ require_once 'tmy-plug.php';
 add_action('wp_enqueue_scripts', 'menu_scripts');
 function menu_scripts()
 {
+	// TODO the legacy gtlf animation
 	// wp_enqueue_script('animation', get_bloginfo('stylesheet_directory') . '/three/dist/client/bundle.js', array('jquery'), '1.0.0', true);
 	wp_enqueue_script('videojs', get_stylesheet_directory_uri() .  '/js/dist/frontend_script.bundle.js', array('jquery'), '1.0.0', true);
 	$parent_style = 'parent-style';

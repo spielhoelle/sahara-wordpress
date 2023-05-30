@@ -33,7 +33,7 @@ export default function Edit(props) {
 			)}
 			<table>
 				{posts && attributes.sequence.length && attributes.sequence.map((job) => (
-					<video width='320' height='240' class='d-none overlay w-100 h-100' autoplay loop>
+					<video width='320' height='240' class='hidden overlay w-100 h-100' autoplay loop>
 						<source src='wp-content/themes/twentytwentytwo-child/smoke.mp4' type='video/mp4' />
 						<source src='movie.ogg' type='video/ogg' />
 						Your browser does not support the video tag.

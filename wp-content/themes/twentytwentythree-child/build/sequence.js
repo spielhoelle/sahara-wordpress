@@ -185,7 +185,7 @@ function save(_ref) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.sequence.map((seq, i) => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
     width: "320",
     height: "240",
-    class: `overlay w-100 ${i !== 0 ? "d-none" : ""}`,
+    class: `overlay w-100 ${i !== 0 ? "hidden" : ""}`,
     autoPlay: i === 0,
     muted: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("source", {

@@ -9,7 +9,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-var useLS = true;
+var useLS = false;
 var videos = _toConsumableArray(document.querySelectorAll('.overlay'));
 var container = document.querySelector('.wp-block-create-block-tmy-sequence.sequence');
 var playing = 0;
@@ -21,7 +21,7 @@ container.addEventListener('click', function (e) {
   if (e.shiftKey) {
     videos[playing].pause();
     if (videos[playing + 1]) {
-      videos[playing + 1].classList.remove('d-none');
+      videos[playing + 1].classList.remove('hidden');
       videos[playing + 1].play();
     }
   } else {
@@ -39,10 +39,10 @@ if (videos[0]) {
         videos[0].addEventListener("pause", function () {
           playing++;
           videos[0].pause();
-          videos[0].classList.add('d-none');
+          videos[0].classList.add('hidden');
           if (videos[1]) {
             console.log('First paused, play second');
-            videos[1].classList.remove('d-none');
+            videos[1].classList.remove('hidden');
             videos[1].play();
           }
         });
@@ -50,10 +50,10 @@ if (videos[0]) {
       if (videos[1]) {
         videos[1].addEventListener("pause", function () {
           playing++;
-          videos[1].classList.add('d-none');
+          videos[1].classList.add('hidden');
           if (videos[2]) {
             console.log('Second paused, play last');
-            videos[2].classList.remove('d-none');
+            videos[2].classList.remove('hidden');
             videos[2].play();
           }
         });
@@ -62,15 +62,17 @@ if (videos[0]) {
         videos[2].addEventListener("pause", function () {
           playing++;
           console.log('All videos played, hide container');
-          videos[1].classList.add('d-none');
-          videos[2].classList.add('d-none');
-          localStorage.setItem('sahara_sequence', Date.now());
+          videos[1].classList.add('hidden');
+          videos[2].classList.add('hidden');
+          if (useLS) {
+            localStorage.setItem('sahara_sequence', Date.now());
+          }
         });
       }
     };
   } else {
     siteBlocks.classList.remove('loading');
-    videos[0].classList.add('d-none');
+    videos[0].classList.add('hidden');
     container.classList.add('hidden');
   }
 }
